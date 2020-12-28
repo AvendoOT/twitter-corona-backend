@@ -1,36 +1,47 @@
 {% extends "TwitterCoronaApp/navbar.html" %}
 {% block content %}
     <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Sentiment')">Sentiment</button>
         <button class="tablinks" onclick="openTab(event, 'Tweets')">Tweets</button>
+        <button class="tablinks" onclick="openTab(event, 'Sentiment')">Sentiment</button>
     </div>
-
+    <div id="Tweets" class="tabcontent" style="display:block">
+        <form method="post" name="tweetForm" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <label>
+                Tweet
+                <input type="text" name="tweet">
+            </label>
+            <label>
+                Since
+                <input type="date" name="since" id="since" required="required">
+            </label>
+            <label>
+                Until
+                <input type="date" name="until" id="until" required="required">
+            </label>
+            <input type="submit" value="Search tweets">
+        </form>
+        <table>
+            {% for tweet in tweets %}
+                <tr>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Tweet</th>
+                </tr>
+                <td>
+                    <p>{{ tweet.date }}</p>
+                </td>
+                <td>
+                    <p>{{ tweet.user }}</p>
+                </td>
+                <td>
+                    <p>{{ tweet.tweet }}</p>
+                </td>
+            {% endfor %}
+        </table>
+    </div>
     <div id="Sentiment" class="tabcontent">
         <h3>TODO</h3>
-    </div>
-    <div id="Tweets" class="tabcontent">
-    <table>
-    <tr>
-        <th>Date</th>
-        <th>User</th>
-        <th>Tweet</th>
-    </tr>
-    <td>
-        {% for tweet in tweets %}
-            <p>{{ tweet.date }}</p>
-        {% endfor %}
-    </td>
-    <td>
-        {% for tweet in tweets %}
-            <p>{{ tweet.user }}</p>
-        {% endfor %}
-    </td>
-    <td>
-        {% for tweet in tweets %}
-            <p>{{ tweet.tweet }}</p>
-        {% endfor %}
-    </td>
-    </table>
     </div>
     <script>
         function openTab(evt, cityName) {
@@ -46,5 +57,35 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+
+        let today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+        const yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("until").setAttribute("max", today);
+        document.getElementById("since").setAttribute("max", today);
+
+        function validateForm() {
+            var tweet = document.forms["tweetForm"]["tweet"].value;
+            var since = document.forms["tweetForm"]["since"].value;
+            var until = document.forms["tweetForm"]["until"].value;
+            if (tweet === "") {
+                alert("Tweet empty");
+                return false;
+            }
+            if (until < since) {
+                alert("Ending date cannot be lesser that starting date");
+                return false;
+            }
+        }
+
     </script>
 {% endblock content %}
