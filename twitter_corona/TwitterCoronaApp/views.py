@@ -10,14 +10,14 @@ def home(request):
         form_data = request.POST.dict()
         twitter_scraper = scraper.scraper(form_data.get('tweet'), form_data.get('since'),
                                           form_data.get('until'))
-        context = {'tweets': twitter_scraper}
         tweets_sentiment = []
         for tw in twitter_scraper:
             tweets_sentiment.append(tw.get('tweet'))
 
-        sentiment.getSentiment(tweets_sentiment, form_data.get('tweet'))
+        sentiment_image = sentiment.getSentiment(tweets_sentiment, form_data.get('tweet'))
 
-        return render(request, '../templates/TwitterCoronaApp/home.html', context)
+        return render(request, '../templates/TwitterCoronaApp/home.html', {'tweets': twitter_scraper,
+                                                                           'sentiment_image' : sentiment_image})
     else:
         return render(request, '../templates/TwitterCoronaApp/home.html')
 

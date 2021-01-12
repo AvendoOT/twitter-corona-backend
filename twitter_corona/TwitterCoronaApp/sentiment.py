@@ -1,6 +1,7 @@
 from textblob import TextBlob
-import sys
+import sys, io
 import matplotlib.pyplot as plt
+import urllib, base64
 
 
 def percentage(part, whole):
@@ -35,4 +36,11 @@ def getSentiment(tweets, about):
     plt.title("Reakcije ljudi na " + about)
     plt.axis = 'equal'
     plt.tight_layout()
-    plt.show()
+    plt.plot()
+    fig = plt.gcf()
+    buf = io.BytesIO()
+    fig.savefig(buf, format = "png")
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return uri

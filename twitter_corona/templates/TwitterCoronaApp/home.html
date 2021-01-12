@@ -41,7 +41,9 @@
         </table>
     </div>
     <div id="Sentiment" class="tabcontent">
-        <h3>TODO</h3>
+        {% if sentiment_image %}
+            <img src="data:image/png;base64,{{ sentiment_image }}" alt="" height="350" width="450">
+        {% endif %}
     </div>
     <script>
         function openTab(evt, cityName) {
@@ -83,6 +85,10 @@
             }
             if (until < since) {
                 alert("Ending date cannot be lesser that starting date");
+                return false;
+            }
+            if (until === since) {
+                alert("Ending date cannot be equal to starting date");
                 return false;
             }
         }
