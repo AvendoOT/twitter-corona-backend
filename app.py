@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def hello():
-    return views.home()
+def hello(request):
+    return views.home(request)
 
 
 if __name__ == "__main__":
