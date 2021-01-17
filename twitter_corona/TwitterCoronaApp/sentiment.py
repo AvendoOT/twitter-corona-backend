@@ -1,5 +1,5 @@
 from textblob import TextBlob
-import sys, io
+import io
 import matplotlib.pyplot as plt
 import urllib, base64
 
@@ -25,7 +25,7 @@ def getSentiment(tweets, about):
             negative += 1
     positive = format(percentage(positive, length), '.2f')
     negative = format(percentage(negative, length), '.2f')
-    neutral = format(percentage(neutral, length), '2f')
+    neutral = format(percentage(neutral, length), '.2f')
 
     labels = ['Positive [' + str(positive) + '%]', 'Neutral [' + str(neutral) + '%]',
               'Negative [' + str(negative) + '%]']
@@ -39,7 +39,7 @@ def getSentiment(tweets, about):
     plt.plot()
     fig = plt.gcf()
     buf = io.BytesIO()
-    fig.savefig(buf, format = "png")
+    fig.savefig(buf, format="png")
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
