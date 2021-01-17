@@ -5,7 +5,7 @@ from TwitterCoronaApp import views
 app = Flask(__name__)
 
 
-@app.route("")
+@app.route("/")
 def hello():
     return views.home()
 
