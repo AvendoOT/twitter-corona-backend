@@ -8,6 +8,6 @@ def scraper(query, since, until):
         if i > 100:
             break
         tweets.append({'date': tweet.date,
-                       'user': tweet.user.username,
+                       'user': tweet.username,
                        'tweet': tweet.content})
     return tweets
