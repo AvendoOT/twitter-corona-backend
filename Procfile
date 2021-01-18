@@ -1,1 +1,1 @@
-web: waitress-serve twitter_corona.wsgi:application
+web: waitress-serve --port=$PORT twitter_corona.wsgi:application
