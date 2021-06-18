@@ -14,6 +14,7 @@ def getSentiment(tweets, about):
     negative = 0
     polarity = 0
     length = len(tweets)
+
     for tweet in tweets:
         analysis = TextBlob(tweet)
         polarity += analysis.sentiment.polarity
@@ -22,7 +23,8 @@ def getSentiment(tweets, about):
         elif analysis.sentiment.polarity > 0.00:
             positive += 1
         elif analysis.sentiment.polarity < 0.00:
-            negative += 1
+            negative += 5
+            length += 4
     positive = format(percentage(positive, length), '.2f')
     negative = format(percentage(negative, length), '.2f')
     neutral = format(percentage(neutral, length), '.2f')
@@ -33,7 +35,7 @@ def getSentiment(tweets, about):
     colors = ['yellowgreen', 'gold', 'red']
     patches, texts = plt.pie(sizes, colors=colors, startangle=90)
     plt.legend(patches, labels, loc="best")
-    plt.title("Reakcije ljudi na " + about)
+    plt.title("User reaction to " + about)
     plt.axis = 'equal'
     plt.tight_layout()
     plt.plot()

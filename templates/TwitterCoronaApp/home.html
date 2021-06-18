@@ -80,7 +80,7 @@
             var since = document.forms["tweetForm"]["since"].value;
             var until = document.forms["tweetForm"]["until"].value;
             if (tweet === "") {
-                alert("Tweet empty");
+                alert("Tweet query cannot be empty");
                 return false;
             }
             if (until < since) {

@@ -8,6 +8,7 @@ from TwitterCoronaApp import sentiment
 def home(request):
     if request.POST:
         form_data = request.POST.dict()
+        print (form_data)
         twitter_scraper = scraper.scraper(form_data.get('tweet'), form_data.get('since'),
                                           form_data.get('until'))
         tweets_sentiment = []
